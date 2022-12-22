@@ -38,7 +38,10 @@
         [listArray addObject:[NSString stringWithFormat:@"%@",@(i)]];
     }
     _cellView = [[MLMOptionSelectView alloc] initOptionView];
-
+    _cellView.shadowView.layer.shadowOffset = CGSizeMake(0, 0);
+    _cellView.shadowView.layer.shadowColor = [[UIColor redColor] colorWithAlphaComponent:0.4].CGColor;
+    _cellView.shadowView.layer.shadowOpacity = 1.0;
+    _cellView.shadowView.layer.shadowRadius = 10;
     
     [self leftRight];
     [self topBottom];

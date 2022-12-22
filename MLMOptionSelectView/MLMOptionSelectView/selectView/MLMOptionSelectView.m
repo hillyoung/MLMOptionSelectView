@@ -61,6 +61,8 @@ static CGFloat arrow_W = 15;//箭头宽
 ///箭头顶点的位置和动画开始位置
 @property (nonatomic, assign) CGFloat arrow_offset;//(0 - 1之间)
 
+@property (nonatomic, strong) UIView *shadowView;       /**< 阴影视图 */
+
 @end
 
 @implementation MLMOptionSelectView
@@ -94,11 +96,21 @@ static CGFloat arrow_W = 15;//箭头宽
 - (void)setBackColor:(UIColor *)backColor {
     _backColor = backColor;
     self.backgroundColor = _backColor;
+    self.shadowView.backgroundColor = _backColor;
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
     _cornerRadius = cornerRadius;
     self.layer.cornerRadius = cornerRadius;
+    self.shadowView.layer.cornerRadius = cornerRadius;
+}
+
+- (UIView *)shadowView {
+    if(!_shadowView) {
+        _shadowView = [UIView new];
+        _shadowView.backgroundColor = [UIColor clearColor];
+    }
+    return _shadowView;
 }
 
 #pragma mark - 计算弹出位置
@@ -142,6 +154,7 @@ static CGFloat arrow_W = 15;//箭头宽
 
     //添加视图
     [KEYWINDOW addSubview:self.cover];
+    [self.showView addSubview:self.shadowView];
     [self.showView addSubview:self];
     [self addConstraintToCover];
 }
@@ -339,6 +352,7 @@ static CGFloat arrow_W = 15;//箭头宽
         default:
             break;
     }
+    self.shadowView.frame = self.frame;
     startPoint = CGPointMake(MIN(SCREEN_WIDTH - _edgeInsets.right - viewWidth, MAX(_edgeInsets.left, point.x - viewWidth * anchorPoint.x)), MIN(SCREEN_HEIGHT - _edgeInsets.bottom - viewHeight, MAX(_edgeInsets.top, point.y - viewHeight* anchorPoint.y)));
     showFrame = CGRectMake(startPoint.x, startPoint.y, viewWidth, viewHeight);
     self.showView.frame = showFrame;

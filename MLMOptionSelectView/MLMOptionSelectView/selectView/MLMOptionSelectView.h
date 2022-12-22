@@ -75,6 +75,7 @@ typedef void(^ActionBack)(NSIndexPath*);
 ///显示时，距离四周的间距，具体对齐方式，可以自行根据需求设置
 @property (nonatomic, assign) UIEdgeInsets edgeInsets;
 
+@property (nonatomic, strong, readonly) UIView *shadowView;       /**< 阴影视图 */
 
 
 #pragma mark - method
